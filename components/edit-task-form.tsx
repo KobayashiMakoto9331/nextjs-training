@@ -10,7 +10,7 @@ type EditTaskFormProps = {
   onCancel: () => void;
 };
 
-export default function EditTaskForm({ task, onUpdateTask, onCancel }: EditTaskFormProps) {
+export function EditTaskForm({ task, onUpdateTask, onCancel }: EditTaskFormProps) {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
 

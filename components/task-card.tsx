@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Task } from "@/types/task";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import EditTaskForm from "./edit-task-form";
+import { EditTaskForm } from "./edit-task-form";
 import { Draggable } from "@/components/ui/draggable";
 
 type TaskCardProps = {

@@ -54,7 +54,7 @@ export default function KanbanBoard({ initialTasks }: KanbanBoardProps) {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Kanban Board</h1>
       <AddTaskForm allTasks={tasks} onAddTask={addTask} />
-      <DndContext onDragEnd={onDragEnd}>
+      <DndContext id="builder-dnd" onDragEnd={onDragEnd}>
         <div className="flex space-x-4">
           {taskTypes.map((status) => (
             <Droppable key={status} id={status}>
