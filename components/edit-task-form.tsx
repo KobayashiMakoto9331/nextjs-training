@@ -3,26 +3,26 @@ import { Task } from "@/types/task";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { updateTaskAction } from "@/app/actions/taskFetcher";
 
 type EditTaskFormProps = {
   task: Task;
-  onUpdateTask: (task: Task) => void;
-  onCancel: () => void;
+  onClose: () => void;
 };
 
-export function EditTaskForm({ task, onUpdateTask, onCancel }: EditTaskFormProps) {
+export function EditTaskForm({ task, onClose }: EditTaskFormProps) {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (title.trim()) {
-      onUpdateTask({ ...task, title, description });
-    }
+  const formAction = async (formData: FormData) => {
+    formData.set("title", title);
+    formData.set("description", description);
+    await updateTaskAction(task.id, formData);
+    onClose();
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form action={formAction} className="space-y-4">
       <Input
         type="text"
         placeholder="Task title"
@@ -39,7 +39,7 @@ export function EditTaskForm({ task, onUpdateTask, onCancel }: EditTaskFormProps
         <Button type="submit" variant="default">
           Save
         </Button>
-        <Button type="button" variant="outline" onClick={onCancel}>
+        <Button type="button" variant="outline" onClick={onClose}>
           Cancel
         </Button>
       </div>

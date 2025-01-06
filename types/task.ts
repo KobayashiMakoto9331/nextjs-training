@@ -1,4 +1,4 @@
-export const taskTypes = ["todo", "inProgress", "done"];
+export const taskTypes = ["TODO", "IN_PROGRESS", "DONE"];
 
 export interface Task {
   id: string;
