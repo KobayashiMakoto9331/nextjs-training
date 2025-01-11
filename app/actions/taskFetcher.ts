@@ -2,13 +2,14 @@
 
 import { prisma } from "@/lib/prisma";
 import { Task } from "@/types/task";
+import { TaskStatus } from "@prisma/client/wasm";
 import { revalidatePath } from "next/cache";
 
 export async function fetchTasks(): Promise<Task[]> {
   return await prisma.task.findMany();
 }
 
-export async function addTaskAction(formdata: FormData) {
+export async function addTaskAction(formdata: FormData, userId: string) {
   const title = formdata.get("title") as string;
   const description = formdata.get("description") as string;
 
@@ -24,6 +25,7 @@ export async function addTaskAction(formdata: FormData) {
         description: trimmedDescription || "",
         status: "TODO",
         order: 0,
+        userId: userId.toString(),
       },
     });
     revalidatePath("/");
@@ -53,10 +55,7 @@ export async function updateTaskAction(taskId: string, formdata: FormData) {
   }
 }
 
-export async function updateTaskStatusAction(
-  taskId: string,
-  status: Task["status"]
-): Promise<void> {
+export async function updateTaskStatusAction(taskId: string, status: TaskStatus): Promise<void> {
   try {
     await prisma.task.update({
       where: { id: taskId },

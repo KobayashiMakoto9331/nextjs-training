@@ -6,6 +6,7 @@ import { Task, taskTypes } from "@/types/task";
 import { DragEndEvent } from "@dnd-kit/core";
 import { DndWrapper } from "@/lib/dnd-kit-sensor";
 import { updateTaskStatusAction } from "@/app/actions/taskFetcher";
+import { TaskStatus } from "@prisma/client/wasm";
 
 type TaskListProps = {
   tasks: Task[];
@@ -18,7 +19,7 @@ export const TaskList = ({ tasks }: TaskListProps) => {
     if (!over || !active) return;
 
     // statusの更新
-    await updateTaskStatusAction(active.id.toString(), over.id as Task["status"]);
+    await updateTaskStatusAction(active.id.toString(), over.id as TaskStatus);
   };
 
   return (
